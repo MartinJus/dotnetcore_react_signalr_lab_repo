@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SignalR.Hubs;
 
-namespace dotnetcore_react_signalr_lab_repo.Controllers
+namespace asyncProgressTest.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -17,10 +18,11 @@ namespace dotnetcore_react_signalr_lab_repo.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly MessageHub _messageHub;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, MessageHub messageHub)
         {
             _logger = logger;
+            _messageHub = messageHub;
         }
 
         [HttpGet]
@@ -34,6 +36,28 @@ namespace dotnetcore_react_signalr_lab_repo.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet("sendSignalMessage/{message}")]
+        public async Task<IActionResult> SendSignalMessage(string message) {
+            await _messageHub.SendMessage(message);
+            return new OkResult();
+        }
+
+        [HttpGet("backgroundjob/{signalRClientId}")]
+        public async Task<IActionResult> SimulateBackgroundJob(string signalRClientId) {
+
+            Guid jobId = Guid.NewGuid();
+
+            Task.Run(async () => {
+                for (int i = 0; i <= 100; i++)
+                {
+                    await _messageHub.UpdateJobProgress(signalRClientId, jobId.ToString(), i);
+                    await Task.Delay(300);
+                };
+            });
+
+            return new OkObjectResult(jobId);
         }
     }
 }
