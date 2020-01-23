@@ -12,3 +12,16 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.progress-outer {
+  width: 300px;
+  height: 55px;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.progress-inner {
+  background-color: darkgreen;
+  height: 100%;
+  transition: width .2s ease-in;
+}
