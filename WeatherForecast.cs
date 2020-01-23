@@ -1,6 +1,6 @@
 using System;
 
-namespace dotnetcore_react_signalr_lab_repo
+namespace asyncProgressTest
 {
     public class WeatherForecast
     {
