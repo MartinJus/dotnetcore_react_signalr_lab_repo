@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace dotnetcore_react_signalr_lab_repo
+namespace asyncProgressTest
 {
     public class Program
     {

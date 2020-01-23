@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SignalR.Hubs;
 
-namespace dotnetcore_react_signalr_lab_repo
+namespace asyncProgressTest
 {
     public class Startup
     {
@@ -22,6 +23,8 @@ namespace dotnetcore_react_signalr_lab_repo
         {
 
             services.AddControllersWithViews();
+            services.AddSignalR();
+            services.AddSingleton<MessageHub>(); //IMessageHub, 
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -55,6 +58,10 @@ namespace dotnetcore_react_signalr_lab_repo
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "sendMessage",
+                    pattern: "{controller}/sendSignalMessage/{message?}");
+                endpoints.MapHub<MessageHub>("/messageHub");
             });
 
             app.UseSpa(spa =>
