@@ -50,10 +50,11 @@ namespace asyncProgressTest.Controllers
             Guid jobId = Guid.NewGuid();
 
             Task.Run(async () => {
-                for (int i = 0; i <= 100; i++)
+                for (int i = 0; i <= 100; i += 10)
                 {
                     await _messageHub.UpdateJobProgress(signalRClientId, jobId.ToString(), i);
-                    await Task.Delay(300);
+                    var rand = new Random();
+                    await Task.Delay(rand.Next(150,350));
                 };
             });
 
