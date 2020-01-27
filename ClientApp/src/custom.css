@@ -21,7 +21,7 @@ code {
 }
 
 .progress-inner {
-  background-color: #60ca60;
+  background-color: #3e9c3e;
   height: 100%;
   transition: width .2s ease-in;
 }
