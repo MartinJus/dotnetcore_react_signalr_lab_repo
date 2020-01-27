@@ -54,7 +54,7 @@ namespace asyncProgressTest.Controllers
                 {
                     await _messageHub.UpdateJobProgress(signalRClientId, jobId.ToString(), i);
                     var rand = new Random();
-                    await Task.Delay(rand.Next(150,350));
+                    await Task.Delay(rand.Next(550,1750));
                 };
             });
 
